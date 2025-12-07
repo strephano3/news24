@@ -37,6 +37,17 @@ La funzione `runDailyPipeline` esegue:
 
 L'endpoint `GET /api/cron/daily` richiama la pipeline e risponde con un payload JSON; collegalo a un cron job (es. Vercel Cron) e passa `Authorization: Bearer <CRON_SECRET>` se configurato.
 
+## Pubblicazione manuale programmata
+
+Se preferisci scrivere articoli a mano puoi alimentare una coda statica:
+
+1. Duplica `data/manual-queue.example.json` in `data/manual-queue.json` e aggiungi gli articoli già completi (titolo, slug opzionale, summary, markdown, heroImage, FAQ, ecc.).
+2. Ogni voce è pubblicata solo se lo `slug` non esiste già in Sanity → puoi tenere nel file anche gli articoli “storici” senza rischiare duplicati.
+3. Richiama `POST /api/manual/publish-next` (protetto con lo stesso `CRON_SECRET`) per far uscire il prossimo articolo in coda. Puoi agganciare la route a Vercel Cron una volta al giorno.
+4. Il body resta esattamente quello definito nel JSON; l’API salva su Sanity titolo, descrizione, FAQ, CTA ed eventuale flag `isEvergreen`.
+
+In questo scenario il bot automatico può restare disattivato: finché c’è coda, la route manuale pubblica un articolo per invocazione.
+
 ## Prossimi passi
 
 1. Inserire le API key SerpApi e rimpiazzare gli URL placeholder in `src/lib/bot/services/cta.ts` con i tuoi link affiliati.

@@ -1,3 +1,4 @@
+import { unstable_noStore as noStore } from "next/cache";
 import { sanityClient } from "./sanity-client";
 
 export type MetadataArticle = {
@@ -8,6 +9,7 @@ export type MetadataArticle = {
   cluster: string;
   eeatScore: number;
   publishedAt: string;
+  heroImage?: string;
 };
 
 export type ArticleDetail = MetadataArticle & {
@@ -21,23 +23,28 @@ export type ArticleDetail = MetadataArticle & {
     badge?: string;
   };
   keywords?: string[];
+  heroImage?: string;
 };
 
-export async function fetchFeaturedArticles(): Promise<MetadataArticle[]> {
+const DEFAULT_LIMIT = 6;
+
+export async function fetchFeaturedArticles(limit = DEFAULT_LIMIT): Promise<MetadataArticle[]> {
+  noStore();
   const client = sanityClient({ useCdn: false });
 
-  const query = `*[_type == "article"] | order(coalesce(publishedAt, _createdAt) desc)[0...4]{
+  const query = `*[_type == "article"] | order(coalesce(publishedAt, _createdAt) desc, _createdAt desc)[0...$limit]{
     "id": _id,
     "slug": slug.current,
     title,
     description,
     "cluster": coalesce(mainCluster->title, "Trend"),
     eeatScore,
-    "publishedAt": coalesce(publishedAt, _createdAt)
+    "publishedAt": coalesce(publishedAt, _createdAt),
+    heroImage
   }`;
 
   try {
-    const data = await client.fetch<MetadataArticle[]>(query);
+    const data = await client.fetch<MetadataArticle[]>(query, { limit });
     return data;
   } catch (error) {
     console.error("Failed to fetch featured articles", error);
@@ -45,7 +52,32 @@ export async function fetchFeaturedArticles(): Promise<MetadataArticle[]> {
   }
 }
 
+export async function fetchLatestArticles({ limit = 3, excludeId }: { limit?: number; excludeId?: string } = {}) {
+  noStore();
+  const client = sanityClient({ useCdn: false });
+
+  const query = `*[_type == "article"${excludeId ? " && _id != $excludeId" : ""}] | order(coalesce(publishedAt, _createdAt) desc, _createdAt desc)[0...$limit]{
+    "id": _id,
+    "slug": slug.current,
+    title,
+    description,
+    "cluster": coalesce(mainCluster->title, "Trend"),
+    eeatScore,
+    "publishedAt": coalesce(publishedAt, _createdAt),
+    heroImage
+  }`;
+
+  try {
+    const data = await client.fetch<MetadataArticle[]>(query, { limit, excludeId });
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch latest articles", error);
+    return [];
+  }
+}
+
 export async function fetchArticleBySlug(slug: string): Promise<ArticleDetail | null> {
+  noStore();
   const client = sanityClient({ useCdn: false });
 
   const query = `*[_type == "article" && slug.current == $slug][0]{
@@ -60,7 +92,8 @@ export async function fetchArticleBySlug(slug: string): Promise<ArticleDetail | 
     ctaBlock,
     "cluster": coalesce(mainCluster->title, "Trend"),
     eeatScore,
-    "publishedAt": coalesce(publishedAt, _createdAt)
+    "publishedAt": coalesce(publishedAt, _createdAt),
+    heroImage
   }`;
 
   try {

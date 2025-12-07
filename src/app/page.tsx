@@ -1,8 +1,9 @@
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
 
 import Link from "next/link";
-import { Suspense } from "react";
-import { LatestArticles } from "@/components/LatestArticles";
+import { ArticleShowcase } from "@/components/ArticleShowcase";
 import { SeoScoreCard } from "@/components/SeoScoreCard";
 
 export default function HomePage() {
@@ -22,6 +23,8 @@ export default function HomePage() {
           </p>
           <div />
         </header>
+
+        <ArticleShowcase />
 
         <section className="grid gap-8 lg:grid-cols-[2fr_1fr]">
           <div className="rounded-3xl bg-white/80 p-8 shadow-lg">
@@ -50,16 +53,17 @@ export default function HomePage() {
             <div>
               <p className="text-sm uppercase tracking-[0.35em] text-brand-600">Radar quotidiano</p>
               <h2 className="text-2xl font-semibold text-slate-900">
-                Ultimi articoli generati
+                Ultime checklist pubblicate
               </h2>
             </div>
             <Link className="text-brand-600" href="/feed">
               RSS feed
             </Link>
           </div>
-          <Suspense fallback={<p className="mt-6 text-slate-500">Caricamento dataset...</p>}>
-            <LatestArticles />
-          </Suspense>
+          <p className="mt-6 text-sm text-slate-600">
+            Il feed RSS verrà presto attivato con un estratto automatico delle nuove guide. Nel frattempo
+            puoi salvare questa pagina nei preferiti per vedere ogni giorno gli aggiornamenti.
+          </p>
         </section>
       </div>
     </main>

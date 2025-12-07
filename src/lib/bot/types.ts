@@ -10,6 +10,9 @@ export type KeywordMetric = {
   volume: number;
   difficulty: number;
   cpc: number;
+  styleId?: string;
+  topicLabel?: string;
+  heroQuery?: string;
 };
 
 export type ArticleBrief = {
@@ -17,12 +20,17 @@ export type ArticleBrief = {
   slug?: string;
   outline: string[];
   targetKeyword: string;
+  styleId?: string;
+  stylePrompt?: string;
+  topicLabel?: string;
+  heroQuery?: string;
   cluster: string;
   monetizationHint?: string;
   faq: Array<{ question: string; answer: string }>;
   trafficPotential?: number;
   summary?: string;
   seoKeywords?: string[];
+  heroImage?: string;
 };
 
 export type CtaRecommendation = {

@@ -46,6 +46,12 @@ export default defineType({
       description: "Contenuto generato dal bot in formato markdown",
     }),
     defineField({
+      name: "heroImage",
+      title: "Hero image",
+      type: "url",
+      description: "Immagine di copertina 1200px per Discover",
+    }),
+    defineField({
       name: "keywords",
       title: "Keyword primarie",
       type: "array",

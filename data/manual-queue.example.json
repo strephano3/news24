@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Il trucco che ha ridotto la bolletta luce senza cambiare abitudini",
+    "slug": "trucco-bolletta-luce-senza-rinunce",
+    "summary": "Analisi concreta su come una famiglia ha tagliato il 30% dei consumi serali con timer smart e offerte ARERA.",
+    "bodyMarkdown": "## Cosa è stato fatto\n- Timer su lavatrice e lavastoviglie dopo le 23\n- Lampadine LED in tutte le camere\n- App fornitore per monitorare i picchi\n\n## Risultato\nLe bollette di maggio-giugno sono calate da 142€ a 101€. Gli stessi accorgimenti funzionano anche su gas e smart plug.\n\n### Fonti\n- ARERA\n- Portale Offerte",
+    "heroImage": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d",
+    "targetKeyword": "bolletta luce dimezzata",
+    "topicLabel": "le bollette luce e gas",
+    "isEvergreen": true,
+    "faq": [
+      {
+        "question": "Quanto tempo serve per impostare questi timer?",
+        "answer": "In media 15 minuti per ogni elettrodomestico, con guida inclusa nell'app del produttore."
+      },
+      {
+        "question": "Serve cambiare fornitore?",
+        "answer": "No, ma confrontare le offerte ARERA ogni 6 mesi permette di massimizzare il risparmio."
+      }
+    ]
+  }
+]

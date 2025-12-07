@@ -4,19 +4,17 @@ import { publishArticles } from "./services/publisher";
 import { evergreenSeeds, refreshEvergreenArticles } from "./services/evergreen";
 import { ArticleBrief, GeneratedArticle, KeywordMetric } from "./types";
 
-function currentMonthSuffix() {
-  return new Intl.DateTimeFormat("it-IT", { month: "long", year: "numeric" }).format(new Date());
-}
-
 export async function generateEvergreenBriefs(limit = 3): Promise<ArticleBrief[]> {
-  const pool = evergreenSeeds();
-  const month = currentMonthSuffix();
-  const seedSelection = [...pool].slice(0, limit);
+  const pool = evergreenSeeds().sort(() => Math.random() - 0.5);
+  const seedSelection = pool.slice(0, limit);
   const metrics: KeywordMetric[] = seedSelection.map((seed) => ({
-    keyword: `${seed.keyword} ${month}`,
+    keyword: seed.keyword,
     volume: seed.volume,
     difficulty: seed.difficulty,
     cpc: seed.cpc,
+    styleId: seed.styleId,
+    topicLabel: seed.topicLabel ?? seed.keyword,
+    heroQuery: seed.heroQuery,
   }));
   return Promise.all(metrics.map((metric) => createArticleBrief(metric)));
 }

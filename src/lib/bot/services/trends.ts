@@ -7,7 +7,6 @@ export type TrendOptions = {
 };
 
 const CURRENT_YEAR = new Date().getFullYear();
-const CONTEXT_LABEL = currentMonthYear();
 const KEYWORD_GUARD =
   /(bonus|bollett|energia|gas|conto|cashback|carta|mutuo|trasporti|nido|isee|arera|inps|mef|aeeeg|famiglia)/i;
 
@@ -94,7 +93,7 @@ function refineKeyword(raw: string | undefined): string | null {
   }
 
   if (KEYWORD_GUARD.test(normalized)) {
-    return withCurrentContext(cleaned);
+    return cleaned;
   }
 
   const heuristics: Array<{ test: RegExp; keyword: string }> = [
@@ -108,34 +107,20 @@ function refineKeyword(raw: string | undefined): string | null {
 
   for (const heuristic of heuristics) {
     if (heuristic.test.test(normalized)) {
-      return withCurrentContext(heuristic.keyword);
+      return heuristic.keyword;
     }
   }
 
   return null;
 }
 
-function withCurrentContext(keyword: string): string {
-  const lower = keyword.toLowerCase();
-  if (lower.includes(CURRENT_YEAR.toString()) || lower.includes(CONTEXT_LABEL.split(" ")[0])) {
-    return keyword;
-  }
-  return `${keyword} ${CONTEXT_LABEL}`;
-}
-
-function currentMonthYear(): string {
-  const formatter = new Intl.DateTimeFormat("it-IT", { month: "long", year: "numeric" });
-  return formatter.format(new Date());
-}
-
 function createFallbackKeywords(): string[] {
-  const context = CONTEXT_LABEL;
   return [
-    `bonus sociale bollette aggiornato ${context}`,
-    `cashback carte spesa ${context}`,
-    `come richiedere bonus nido ${context}`,
-    `offerte energia indicizzate confronto ${context}`,
-    `conti deposito con tassi migliori ${context}`,
-    `mutuo green agevolazioni ${context}`,
+    "bonus sociale bollette aggiornato",
+    "cashback carte spesa",
+    "come richiedere bonus nido",
+    "offerte energia indicizzate confronto",
+    "conti deposito con tassi migliori",
+    "mutuo green agevolazioni",
   ];
 }

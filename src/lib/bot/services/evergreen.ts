@@ -33,6 +33,8 @@ export async function refreshEvergreenArticles(limit = 2) {
       volume: article.trafficPotential ?? 500,
       difficulty: 40,
       cpc: 0.8,
+      topicLabel: removeYearTokens(article.targetKeyword),
+      heroQuery: removeYearTokens(article.targetKeyword),
     };
 
     const brief = await createArticleBrief(metric);
@@ -70,6 +72,9 @@ export async function refreshEvergreenArticles(limit = 2) {
       volume: seed.volume,
       difficulty: seed.difficulty,
       cpc: seed.cpc,
+      styleId: seed.styleId,
+      topicLabel: seed.topicLabel ?? seed.keyword,
+      heroQuery: seed.heroQuery,
     };
 
     const brief = await createArticleBrief(metric);
@@ -92,15 +97,75 @@ type EvergreenArticle = {
   trafficPotential?: number;
 };
 
+type SeedTopic = {
+  keyword: string;
+  styleId: string;
+  heroQuery: string;
+};
+
+const discoverSeeds: SeedTopic[] = [
+  {
+    keyword: "budget da 50€ a settimana",
+    styleId: "budget-settimanale",
+    heroQuery: "budget groceries",
+  },
+  {
+    keyword: "cashback solo carte fintech",
+    styleId: "senza-contanti",
+    heroQuery: "contactless payment",
+  },
+  {
+    keyword: "bolletta della luce dimezzata",
+    styleId: "spesa-tagliata",
+    heroQuery: "home energy savings",
+  },
+  {
+    keyword: "conti deposito migliori",
+    styleId: "confronto-diretto",
+    heroQuery: "savings account statement",
+  },
+  {
+    keyword: "vita senza contanti",
+    styleId: "senza-contanti",
+    heroQuery: "mobile payment",
+  },
+  {
+    keyword: "oggetti inutili trasformati in bolletta gas",
+    styleId: "soldi-nascosti",
+    heroQuery: "garage sale",
+  },
+  {
+    keyword: "food prep da 5€ al giorno",
+    styleId: "diario-tagli-intelligenti",
+    heroQuery: "meal prep containers",
+  },
+  {
+    keyword: "abbonamenti fantasma da eliminare",
+    styleId: "abbonamenti-tagliati",
+    heroQuery: "subscription cancel",
+  },
+  {
+    keyword: "carte da tenere nel portafoglio",
+    styleId: "errore-quotidiano",
+    heroQuery: "wallet credit cards",
+  },
+  {
+    keyword: "alert bancari salva-budget",
+    styleId: "regola-dieci-minuti",
+    heroQuery: "banking app alerts",
+  },
+];
+
 export function evergreenSeeds() {
-  return [
-    { keyword: "come cambiare fornitore luce e gas in italia", volume: 2400, difficulty: 35, cpc: 1.1 },
-    { keyword: "strategie per comprare casa risparmiando su mutuo e tasso", volume: 1700, difficulty: 38, cpc: 1.3 },
-    { keyword: "guida cashback carte fintech senza commissioni", volume: 1200, difficulty: 32, cpc: 0.9 },
-    { keyword: "come organizzare il budget familiare con app e tabelle", volume: 1500, difficulty: 33, cpc: 0.8 },
-    { keyword: "strategie per abbassare bollette tramite pompe di calore", volume: 900, difficulty: 38, cpc: 1.5 },
-    { keyword: "come investire nei lavori di riqualificazione energetica", volume: 1100, difficulty: 45, cpc: 1.6 },
-  ];
+  return discoverSeeds.map((topic) => ({
+    keyword: topic.keyword,
+    volume: 1400,
+    difficulty: 30,
+    cpc: 1.0,
+    styleId: topic.styleId,
+    topicLabel: topic.keyword,
+    heroQuery: topic.heroQuery,
+  }));
 }
 
 function removeYearTokens(value: string) {

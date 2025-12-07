@@ -21,6 +21,7 @@ export async function publishArticles(articles: GeneratedArticle[]) {
       slug: { current: slugify(article.slug ?? article.title ?? article.targetKeyword) },
       body: toPortableText(article.body),
       bodyMarkdown: article.body,
+      heroImage: article.heroImage ?? null,
       keywords: [article.targetKeyword],
       faq: article.faq,
       eeatScore: 75,

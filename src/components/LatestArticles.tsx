@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { type MetadataArticle, fetchFeaturedArticles } from "@/lib/cms/fetch-content";
+import { fetchFeaturedArticles } from "@/lib/cms/fetch-content";
 
 export async function LatestArticles() {
   const articles = await fetchFeaturedArticles();
