@@ -1,7 +1,7 @@
-const FALLBACK_IMAGES = Array.from({ length: 200 }, (_, index) => {
-  const id = 100 + index;
-  return `https://picsum.photos/id/${id}/1600/900`;
-});
+import heroImageList from "../../data/hero-images.json";
+
+const FALLBACK_IMAGES = heroImageList as string[];
+const FALLBACK_URL_PATTERNS = [/source\.unsplash\.com/, /picsum\.photos/];
 
 export function selectFallbackHero(seed: string) {
   let hash = 0;
@@ -12,7 +12,8 @@ export function selectFallbackHero(seed: string) {
 }
 
 export function shouldUseFallbackHero(url?: string | null) {
-  return !url || /source\.unsplash\.com/.test(url);
+  if (!url) return true;
+  return FALLBACK_URL_PATTERNS.some((pattern) => pattern.test(url));
 }
 
 export async function resolveHeroImageUrl(url?: string | null) {
