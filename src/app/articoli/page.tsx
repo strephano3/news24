@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { fetchLatestArticles } from "@/lib/cms/fetch-content";
+import { fetchFeaturedArticles } from "@/lib/cms/fetch-content";
 
 export const dynamic = "force-dynamic";
 
 export default async function ArticlesIndexPage() {
-  const articles = await fetchLatestArticles({ limit: 100 });
+  const articles = await fetchFeaturedArticles(100);
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-16">
