@@ -25,6 +25,14 @@ export default function HomePage() {
         </header>
 
         <ArticleShowcase />
+        <div className="text-center">
+          <Link
+            href="/articoli"
+            className="inline-flex items-center justify-center rounded-full border border-brand-200 px-6 py-2 text-sm font-semibold text-brand-700 transition hover:bg-brand-50"
+          >
+            Tutti gli articoli →
+          </Link>
+        </div>
 
         <section className="grid gap-6 lg:grid-cols-[1.7fr_1fr]">
           <div className="rounded-2xl bg-white/90 p-6 shadow-md lg:max-w-xl lg:self-start">
