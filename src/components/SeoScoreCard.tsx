@@ -7,8 +7,8 @@ export function SeoScoreCard() {
       <h2 className="mt-2 text-3xl font-semibold">Perché possiamo pubblicare ogni giorno</h2>
       <div className="mt-6 space-y-4 text-slate-200">
         <p className="text-lg">
-          Ogni articolo nasce da keyword evergreen e dati generati dall&rsquo;IA: si aggiornano quando i
-          consumi o i tassi cambiano, non quando esce un semplice bonus.
+          Ogni articolo nasce da keyword evergreen e dati di consumo reali: aggiorniamo le guide quando
+          cambiano le tariffe o i tassi, non solo quando appare un nuovo bonus.
         </p>
         <p className="text-lg">
           Scriviamo checklist replicabili: cambiare fornitore, controllare le fasce orarie, gestire

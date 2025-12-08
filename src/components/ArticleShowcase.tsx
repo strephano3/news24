@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import { fetchFeaturedArticles } from "@/lib/cms/fetch-content";
+import { proxyHeroImageUrl } from "@/lib/heroImages";
 
 export async function ArticleShowcase() {
   const articles = await fetchFeaturedArticles(4);
@@ -36,13 +36,11 @@ export async function ArticleShowcase() {
         </Link>
         {heroArticle.heroImage ? (
           <div className="mt-6 overflow-hidden rounded-2xl bg-slate-900/60">
-            <Image
-              src={heroArticle.heroImage}
+            <img
+              src={proxyHeroImageUrl(heroArticle.heroImage) ?? heroArticle.heroImage}
               alt={heroArticle.title}
-              width={1200}
-              height={800}
               className="h-full w-full object-cover"
-              priority
+              loading="lazy"
             />
           </div>
         ) : null}

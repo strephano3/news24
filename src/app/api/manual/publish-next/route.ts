@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { sanityClient } from "@/lib/cms/sanity-client";
 import { toPortableText } from "@/lib/bot/services/publisher";
 import { loadManualQueue, ManualArticle } from "@/lib/manualQueue";
+import { normalizeHeroImage } from "@/lib/heroImages";
 
 export async function POST(request: NextRequest) {
   if (!isAuthorized(request)) {
@@ -34,7 +35,8 @@ export async function POST(request: NextRequest) {
       continue;
     }
 
-    const doc = buildSanityDoc(entry, slug);
+    const heroImage = await normalizeHeroImage(entry.heroImage, slug);
+    const doc = buildSanityDoc(entry, slug, heroImage);
     try {
       const created = await client.create(doc);
       await Promise.all([
@@ -60,7 +62,7 @@ export async function POST(request: NextRequest) {
   });
 }
 
-function buildSanityDoc(entry: ManualArticle, slug: string) {
+function buildSanityDoc(entry: ManualArticle, slug: string, heroImage: string) {
   const now = new Date().toISOString();
   return {
     _type: "article",
@@ -69,7 +71,7 @@ function buildSanityDoc(entry: ManualArticle, slug: string) {
     slug: { current: slug },
     body: toPortableText(entry.bodyMarkdown),
     bodyMarkdown: entry.bodyMarkdown,
-    heroImage: entry.heroImage ?? null,
+    heroImage,
     keywords: entry.targetKeyword ? [entry.targetKeyword] : [],
     faq: (entry.faq ?? []).map((item) => ({
       _key: randomUUID(),

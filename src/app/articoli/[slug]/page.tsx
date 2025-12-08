@@ -2,8 +2,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import type { Metadata } from "next";
-import Image from "next/image";
 import { fetchArticleBySlug, fetchLatestArticles } from "@/lib/cms/fetch-content";
+import { proxyHeroImageUrl } from "@/lib/heroImages";
 
 export const dynamic = "force-dynamic";
 
@@ -41,13 +41,11 @@ export default async function ArticlePage({ params }: PageProps) {
       <p className="mt-4 text-lg text-slate-600">{article.description}</p>
       {article.heroImage ? (
         <div className="mt-6 overflow-hidden rounded-3xl bg-slate-100">
-          <Image
-            src={article.heroImage}
+          <img
+            src={proxyHeroImageUrl(article.heroImage) ?? article.heroImage}
             alt={article.title}
-            width={1600}
-            height={900}
             className="h-auto w-full object-cover"
-            priority
+            loading="lazy"
           />
         </div>
       ) : null}

@@ -18,23 +18,23 @@ export default function HomePage() {
             Guide evergreen per risparmiare su bollette, mutuo e budget familiare
           </h1>
           <p className="text-lg text-slate-600 sm:text-xl">
-            Ogni settimana l&rsquo;IA analizza i trend delle famiglie italiane e pubblica solo guide
-            evergreen, approfondite e facili da mettere in pratica.
+            Ogni settimana analizziamo consumi, tassi e offerte reali per pubblicare solo guide evergreen,
+            approfondite e facili da mettere in pratica.
           </p>
           <div />
         </header>
 
         <ArticleShowcase />
 
-        <section className="grid gap-8 lg:grid-cols-[2fr_1fr]">
-          <div className="rounded-3xl bg-white/80 p-8 shadow-lg">
+        <section className="grid gap-6 lg:grid-cols-[1.7fr_1fr]">
+          <div className="rounded-2xl bg-white/90 p-6 shadow-md lg:max-w-xl lg:self-start">
             <h2 className="text-2xl font-semibold text-slate-900">
               Cosa trovi ogni giorno su NewsRisparmio24
             </h2>
-            <ol className="mt-6 space-y-5 text-slate-600">
+            <ol className="mt-6 space-y-4 text-slate-600">
               {steps.map((step) => (
                 <li key={step.title} className="flex gap-4">
-                  <div className="mt-1 h-6 w-6 rounded-full bg-brand-100 text-center text-sm font-semibold text-brand-700">
+                  <div className="mt-1 h-6 w-6 rounded-full bg-brand-100 text-center text-xs font-semibold uppercase text-brand-700">
                     {step.id}
                   </div>
                   <div>
@@ -48,23 +48,6 @@ export default function HomePage() {
           <SeoScoreCard />
         </section>
 
-        <section className="rounded-3xl bg-white/80 p-8 shadow-lg">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <p className="text-sm uppercase tracking-[0.35em] text-brand-600">Radar quotidiano</p>
-              <h2 className="text-2xl font-semibold text-slate-900">
-                Ultime checklist pubblicate
-              </h2>
-            </div>
-            <Link className="text-brand-600" href="/feed">
-              RSS feed
-            </Link>
-          </div>
-          <p className="mt-6 text-sm text-slate-600">
-            Il feed RSS verrà presto attivato con un estratto automatico delle nuove guide. Nel frattempo
-            puoi salvare questa pagina nei preferiti per vedere ogni giorno gli aggiornamenti.
-          </p>
-        </section>
       </div>
     </main>
   );
