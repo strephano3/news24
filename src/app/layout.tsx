@@ -19,11 +19,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="it" className={inter.className}>
       <body className="antialiased bg-slate-50 text-slate-900">
