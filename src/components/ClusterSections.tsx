@@ -1,11 +1,6 @@
 import Link from "next/link";
 import { fetchArticlesByCluster, MetadataArticle } from "@/lib/cms/fetch-content";
-
-export type ClusterDefinition = {
-  id: string;
-  label: string;
-  cluster: string;
-};
+import type { ClusterDefinition } from "@/lib/cluster-config";
 
 export async function ClusterSections({ sections }: { sections: ClusterDefinition[] }) {
   const clustersWithArticles = await Promise.all(
@@ -22,7 +17,7 @@ export async function ClusterSections({ sections }: { sections: ClusterDefinitio
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h3 className="text-2xl font-semibold text-slate-900">{label}</h3>
             <Link
-              href="/articoli"
+              href={`/cluster/${id}`}
               className="text-sm font-semibold text-brand-600 transition hover:text-brand-500"
             >
               Tutti gli articoli →

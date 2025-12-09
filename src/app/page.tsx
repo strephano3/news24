@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArticleShowcase } from "@/components/ArticleShowcase";
 import { SeoScoreCard } from "@/components/SeoScoreCard";
 import { ClusterSections } from "@/components/ClusterSections";
+import { clusterDefinitions } from "@/lib/cluster-config";
 
 export default function HomePage() {
   return (
@@ -22,20 +23,20 @@ export default function HomePage() {
             aria-label="Categorie principali"
             className="flex flex-wrap items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500"
           >
-            {clusterSections.map((item) => (
-              <a
+            {clusterDefinitions.map((item) => (
+              <Link
                 key={item.id}
-                href={`#${item.id}`}
+                href={`/cluster/${item.id}`}
                 className="rounded-full border border-slate-200 px-3 py-1 text-slate-700 transition hover:border-brand-300 hover:text-brand-700"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
         </header>
 
         <ArticleShowcase />
-        <ClusterSections sections={clusterSections} />
+        <ClusterSections sections={clusterDefinitions} />
         <div className="text-center">
           <Link
             href="/articoli"
@@ -91,11 +92,4 @@ const steps = [
     description:
       "Guide su app finance, tabelle di spesa e carte fintech a canone zero per gestire il budget annuale.",
   },
-];
-
-const clusterSections = [
-  { id: "news", label: "News", cluster: "News" },
-  { id: "conti", label: "I migliori conti", cluster: "I migliori conti" },
-  { id: "consigli", label: "Consigli", cluster: "Consigli" },
-  { id: "esperienze", label: "Esperienze", cluster: "Esperienze" },
 ];

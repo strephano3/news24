@@ -8,6 +8,14 @@ export default async function ArticlesIndexPage() {
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-16">
+      <nav className="mb-6 text-sm">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-1.5 text-slate-700 transition hover:border-brand-300 hover:text-brand-700"
+        >
+          ← Torna alla home
+        </Link>
+      </nav>
       <header className="text-center">
         <p className="text-sm uppercase tracking-[0.35em] text-brand-600">Archivio completo</p>
         <h1 className="mt-2 text-4xl font-semibold text-slate-900">Tutti gli articoli</h1>
