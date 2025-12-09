@@ -2,8 +2,7 @@
   "crons": [
     {
       "path": "/api/manual/publish-next",
-      "schedule": "42 22 * * *",
-      "method": "POST"
+      "schedule": "42 22 * * *"
     }
   ]
 }
