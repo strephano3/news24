@@ -2,7 +2,7 @@ import Link from "next/link";
 import { fetchArticlesByCluster, MetadataArticle } from "@/lib/cms/fetch-content";
 import type { ClusterDefinition } from "@/lib/cluster-config";
 
-export async function ClusterSections({ sections }: { sections: ClusterDefinition[] }) {
+export async function ClusterSections({ sections }: { sections: readonly ClusterDefinition[] }) {
   const clustersWithArticles = await Promise.all(
     sections.map(async (section) => {
       const articles = await fetchArticlesByCluster(section.cluster, 3);
