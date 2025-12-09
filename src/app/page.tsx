@@ -12,7 +12,7 @@ export default function HomePage() {
       <div className="mx-auto max-w-6xl space-y-16">
         <header className="space-y-6 text-center">
           <p className="text-sm uppercase tracking-[0.35em] text-brand-600">
-            NewsRisparmio24
+            il tuo risparmio, intelligente
           </p>
           <h1 className="text-4xl font-semibold text-slate-900 sm:text-5xl">
             Guide evergreen per risparmiare su bollette, mutuo e budget familiare
