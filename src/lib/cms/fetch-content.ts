@@ -1,5 +1,6 @@
 import { unstable_noStore as noStore } from "next/cache";
 import { sanityClient } from "./sanity-client";
+import { selectFallbackHero } from "../heroImages";
 
 export type MetadataArticle = {
   id: string;
@@ -45,7 +46,7 @@ export async function fetchFeaturedArticles(limit = DEFAULT_LIMIT): Promise<Meta
 
   try {
     const data = await client.fetch<MetadataArticle[]>(query, { limit });
-    return data;
+    return data.map(applyHeroFallback);
   } catch (error) {
     console.error("Failed to fetch featured articles", error);
     return [];
@@ -69,7 +70,7 @@ export async function fetchLatestArticles({ limit = 3, excludeId }: { limit?: nu
 
   try {
     const data = await client.fetch<MetadataArticle[]>(query, { limit, excludeId });
-    return data;
+    return data.map(applyHeroFallback);
   } catch (error) {
     console.error("Failed to fetch latest articles", error);
     return [];
@@ -98,7 +99,7 @@ export async function fetchArticleBySlug(slug: string): Promise<ArticleDetail | 
 
   try {
     const data = await client.fetch<ArticleDetail | null>(query, { slug });
-    return data;
+    return data ? applyHeroFallback(data) : null;
   } catch (error) {
     console.error("Failed to fetch article by slug", slug, error);
     return null;
@@ -123,9 +124,16 @@ export async function fetchArticlesByCluster(clusterTitle: string, limit = DEFAU
 
   try {
     const data = await client.fetch<MetadataArticle[]>(query, { cluster: clusterTitle, limit });
-    return data;
+    return data.map(applyHeroFallback);
   } catch (error) {
     console.error("Failed to fetch articles for cluster", clusterTitle, error);
     return [];
   }
+}
+
+function applyHeroFallback<T extends MetadataArticle>(article: T): T {
+  if (!article.heroImage) {
+    return { ...article, heroImage: selectFallbackHero(article.slug) };
+  }
+  return article;
 }
