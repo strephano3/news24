@@ -12,8 +12,8 @@ export async function ArticleShowcase() {
   const [heroArticle, ...secondary] = articles;
 
   return (
-    <section className="grid gap-6 rounded-3xl bg-white/90 p-6 shadow-lg lg:grid-cols-[1.5fr_1fr] lg:p-10">
-      <div className="space-y-4 rounded-3xl bg-slate-950/90 p-6 text-white">
+    <section className="grid gap-6 rounded-3xl border border-slate-300 bg-slate-200/80 p-6 shadow-2xl shadow-slate-400 lg:grid-cols-[1.5fr_1fr] lg:p-10">
+      <div className="space-y-4 rounded-3xl bg-slate-900 p-6 text-white shadow-[0_35px_65px_rgba(15,23,42,0.35)]">
         <p className="text-xs uppercase tracking-[0.4em] text-brand-200">In evidenza</p>
         <h2 className="text-3xl font-semibold">
           {heroArticle.title}
@@ -72,7 +72,7 @@ function SecondaryCard({
   return (
     <Link
       href={`/articoli/${article.slug}`}
-      className="flex flex-col gap-3 rounded-2xl border border-slate-100 bg-white/80 p-4 transition hover:border-brand-200"
+      className="flex flex-col gap-3 rounded-2xl border border-slate-300 bg-slate-100 p-4 shadow-2xl shadow-slate-400/80 transition hover:-translate-y-0.5 hover:border-brand-200"
     >
       <p className="text-xs uppercase tracking-[0.35em] text-brand-600">Nuova guida</p>
       <p className="text-lg font-semibold text-slate-900">{article.title}</p>
@@ -94,7 +94,7 @@ function PlaceholderCard({ article }: { article: { slug: string; title: string }
   return (
     <Link
       href={`/articoli/${article.slug}`}
-      className="flex h-full flex-col items-center justify-center rounded-2xl border border-dashed border-brand-200 bg-brand-50/70 p-6 text-center text-brand-800"
+      className="flex h-full flex-col items-center justify-center rounded-2xl border border-dashed border-brand-200 bg-brand-50/80 p-6 text-center text-brand-800 shadow-xl shadow-brand-100/70"
     >
       <p className="text-sm uppercase tracking-[0.4em]">NewsRisparmio24</p>
       <p className="mt-3 text-lg font-semibold">Torna domani per la prossima analisi.</p>
