@@ -97,6 +97,11 @@ function slugify(value?: string) {
 }
 
 function isAuthorized(request: NextRequest) {
+  // Requests triggered by Vercel Cron jobs include this header automatically.
+  if (request.headers.has("x-vercel-cron")) {
+    return true;
+  }
+
   const secret = process.env.CRON_SECRET;
   if (!secret) return true;
   const header = request.headers.get("authorization") ?? "";
