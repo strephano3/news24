@@ -21,7 +21,19 @@ export default function HomePage() {
             Ogni settimana analizziamo consumi, tassi e offerte reali per pubblicare solo guide evergreen,
             approfondite e facili da mettere in pratica.
           </p>
-          <div />
+          <nav
+            aria-label="Categorie principali"
+            className="flex flex-wrap items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500"
+          >
+            {mainNavItems.map((item) => (
+              <span
+                key={item}
+                className="rounded-full border border-slate-200 px-3 py-1 text-slate-700"
+              >
+                {item}
+              </span>
+            ))}
+          </nav>
         </header>
 
         <ArticleShowcase />
@@ -81,3 +93,5 @@ const steps = [
       "Guide su app finance, tabelle di spesa e carte fintech a canone zero per gestire il budget annuale.",
   },
 ];
+
+const mainNavItems = ["News", "I migliori conti", "Consigli", "Esperienze"];
