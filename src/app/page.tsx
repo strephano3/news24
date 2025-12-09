@@ -5,6 +5,7 @@ export const fetchCache = "force-no-store";
 import Link from "next/link";
 import { ArticleShowcase } from "@/components/ArticleShowcase";
 import { SeoScoreCard } from "@/components/SeoScoreCard";
+import { ClusterSections } from "@/components/ClusterSections";
 
 export default function HomePage() {
   return (
@@ -21,18 +22,20 @@ export default function HomePage() {
             aria-label="Categorie principali"
             className="flex flex-wrap items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500"
           >
-            {mainNavItems.map((item) => (
-              <span
-                key={item}
-                className="rounded-full border border-slate-200 px-3 py-1 text-slate-700"
+            {clusterSections.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className="rounded-full border border-slate-200 px-3 py-1 text-slate-700 transition hover:border-brand-300 hover:text-brand-700"
               >
-                {item}
-              </span>
+                {item.label}
+              </a>
             ))}
           </nav>
         </header>
 
         <ArticleShowcase />
+        <ClusterSections sections={clusterSections} />
         <div className="text-center">
           <Link
             href="/articoli"
@@ -90,4 +93,9 @@ const steps = [
   },
 ];
 
-const mainNavItems = ["News", "I migliori conti", "Consigli", "Esperienze"];
+const clusterSections = [
+  { id: "news", label: "News", cluster: "News" },
+  { id: "conti", label: "I migliori conti", cluster: "I migliori conti" },
+  { id: "consigli", label: "Consigli", cluster: "Consigli" },
+  { id: "esperienze", label: "Esperienze", cluster: "Esperienze" },
+];

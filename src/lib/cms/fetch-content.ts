@@ -104,3 +104,28 @@ export async function fetchArticleBySlug(slug: string): Promise<ArticleDetail | 
     return null;
   }
 }
+
+export async function fetchArticlesByCluster(clusterTitle: string, limit = DEFAULT_LIMIT) {
+  noStore();
+  const client = sanityClient({ useCdn: false });
+
+  const query = `*[_type == "article" && defined(mainCluster->title) && mainCluster->title == $cluster]
+    | order(coalesce(publishedAt, _createdAt) desc, _createdAt desc)[0...$limit]{
+      "id": _id,
+      "slug": slug.current,
+      title,
+      description,
+      "cluster": coalesce(mainCluster->title, "Trend"),
+      eeatScore,
+      "publishedAt": coalesce(publishedAt, _createdAt),
+      heroImage
+    }`;
+
+  try {
+    const data = await client.fetch<MetadataArticle[]>(query, { cluster: clusterTitle, limit });
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch articles for cluster", clusterTitle, error);
+    return [];
+  }
+}
